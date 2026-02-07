@@ -75,7 +75,8 @@ graph LR
 
 ```bash
 # Cloner le projet
-cd ~/Projects/projet_big_data_cytech_25
+git clone <repository>
+cd projet_big_data_cytech_25
 
 # Build
 docker compose up -d --build
