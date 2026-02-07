@@ -9,8 +9,11 @@ JOUDI Haroun, FILALI Amine, OUAD Mouad
 
 | Service | Description | URL | Identifiants |
 |---------|-------------|-----|--------------|
+| **Spark Master** | Interface de monitoring Spark | [spark-web-ui.haroun-joudi.com](http://spark-web-ui.haroun-joudi.com) | - |
+| **MinIO Console** | Stockage S3 des données brutes | [minio-console.haroun-joudi.com](http://minio-console.haroun-joudi.com) | minio / minio123 |
 | **Metabase** | Dashboard d'analyse BI | [metabase.haroun-joudi.com](http://metabase.haroun-joudi.com) | harounjoudi.dev@gmail.com / metabase123 |
-| **Airflow** | Orchestration de pipeline | [airflow.haroun-joudi.com](http://airflow.haroun-joudi.com) | airflow / airflow |
+| **ML Service** | Prédiction tarifaire Streamlit | [ml-service.haroun-joudi.com](https://ml-service.haroun-joudi.com) | - |
+| **Airflow** | Orchestration de pipeline | [airflow.haroun-joudi.com](https://airflow.haroun-joudi.com) | airflow / airflow |
 
 
 
