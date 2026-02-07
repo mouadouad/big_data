@@ -1,15 +1,14 @@
-# 🚀 NYC Taxi Big Data Pipeline - Production Deployment
+# NYC Taxi Big Data Pipeline
 
 **Projet Big Data - CY Tech 2025**  
-**Auteur:** Haroun Joudi  
-**Période:** Février 2026  
-**Statut:** ✅ Production Ready
+**Auteurs:** FILALI Amine / Haroun Joudi / Mouad Ouad  
+**Période:** Février 2026
 
 ---
 
 ## 📊 Vue d'Ensemble du Projet
 
-Ce projet implémente une pipeline Big Data complète de bout en bout pour l'analyse de **36,6 millions** de trajets de taxis NYC en 2023. L'architecture comprend l'ingestion de données avec Spark, un entrepôt de données star schema, un dashboard BI, un service de prédiction ML, et une orchestration automatisée avec Airflow.
+Ce projet analyse **36,6 millions** de trajets de taxis NYC (2023). L'architecture comprend l'ingestion de données avec Spark, un entrepôt de données star schema, un dashboard Metabase, un service de prédiction ML, et une orchestration Airflow.
 
 ### 🎯 Objectifs Accomplis
 
@@ -28,14 +27,12 @@ Ce projet implémente une pipeline Big Data complète de bout en bout pour l'ana
 
 | Service | Description | URL | Identifiants |
 |---------|-------------|-----|--------------|
-| 🔥 **Spark Master** | Interface de monitoring Spark | [spark.haroun-joudi.com](http://spark.haroun-joudi.com) | - |
-| 📦 **MinIO Console** | Stockage S3 des données brutes | [minio.haroun-joudi.com](http://minio.haroun-joudi.com) | minio / minio123 |
-| 📊 **Metabase** | Dashboard d'analyse BI | [metabase.haroun-joudi.com](http://metabase.haroun-joudi.com) | (configuré) |
-| 🤖 **ML Service** | Prédiction tarifaire Streamlit | [ml.haroun-joudi.com](http://ml.haroun-joudi.com) | - |
-| 🔄 **Airflow** | Orchestration de pipeline | [airflow.haroun-joudi.com](http://airflow.haroun-joudi.com) | airflow / airflow |
+| 🔥 **Spark Master** | Interface de monitoring Spark | [spark-web-ui.haroun-joudi.com](http://spark-web-ui.haroun-joudi.com) | - |
+| 📦 **MinIO Console** | Stockage S3 des données brutes | [minio-console.haroun-joudi.com](http://minio-console.haroun-joudi.com) | minio / minio123 |
+| 📊 **Metabase** | Dashboard d'analyse BI | [metabase.haroun-joudi.com](http://metabase.haroun-joudi.com) | harounjoudi.dev@gmail.com / metabase123 |
+| 🤖 **ML Service** | Prédiction tarifaire Streamlit | [ml-service.haroun-joudi.com](https://ml-service.haroun-joudi.com) | - |
+| 🔄 **Airflow** | Orchestration de pipeline | [airflow.haroun-joudi.com](https://airflow.haroun-joudi.com) | airflow / airflow |
 | 🗄️ **PostgreSQL** | Data Warehouse | `bigdata-1:5432` | postgres / postgres |
-
-> **Note:** Remplacez `haroun-joudi.com` par votre domaine réel après configuration DNS/reverse proxy
 
 ---
 
@@ -98,7 +95,7 @@ docker compose up -d spark-master spark-worker-1 spark-worker-2
 # Voir les logs
 docker compose logs -f spark-master
 
-# Accès UI: http://spark.haroun-joudi.com
+# Accès UI: http://spark-web-ui.haroun-joudi.com
 ```
 
 #### 📦 MinIO (Stockage S3)
@@ -106,7 +103,7 @@ docker compose logs -f spark-master
 # Démarrer MinIO
 docker compose up -d minio
 
-# Accès Console: http://minio.haroun-joudi.com
+# Accès Console: http://minio-console.haroun-joudi.com
 # Login: minio / minio123
 ```
 
@@ -144,7 +141,7 @@ python train.py          # 10 min
 # Démarrer le service
 docker compose up -d ml-service
 
-# Accès: http://ml.haroun-joudi.com
+# Accès: https://ml-service.haroun-joudi.com
 ```
 
 #### 🔄 Airflow (Orchestration)
@@ -155,7 +152,7 @@ docker compose build airflow-webserver airflow-scheduler
 # Démarrer Airflow
 docker compose up -d airflow-postgres airflow-webserver airflow-scheduler
 
-# Accès: http://airflow.haroun-joudi.com
+# Accès: https://airflow.haroun-joudi.com
 # Login: airflow / airflow
 ```
 
@@ -351,9 +348,8 @@ Result: <1 seconde par requête
 ```
 
 **Livrables:**
-- Screenshot: `ex04_dashboard/metabase_graphs.png`
-- Rapport FR: `ex04_dashboard/Exercise_4_Dashboard_Report_FR.md` (15 pages)
-- Rapport EN: `ex04_dashboard/Exercise_4_Dashboard_Report.md` (15 pages)
+- Screenshots: `ex04_dashboard/`
+- Rapport FR: `ex04_dashboard/Exercise_4_Dashboard_Report_FR.md`
 
 **Accès:** [metabase.haroun-joudi.com](http://metabase.haroun-joudi.com)
 
@@ -409,8 +405,8 @@ deploy:
 
 **Résultats:**
 - ✅ RMSE: **6.56** (< 10 target)
-- ✅ Entraînement: 10 minutes
-- ✅ Mémoire: <4GB (serveur safe)
+- ✅ Entraînement: 30 minutes
+- ✅ Mémoire: <4GB
 
 **Interface Streamlit:**
 - Formulaire de saisie (distance, heure, zone, etc.)
@@ -426,7 +422,7 @@ cd src && python preprocessing.py && python train.py
 
 # Service
 docker compose up -d ml-service
-# Accès: http://ml.haroun-joudi.com
+# Accès: https://ml-service.haroun-joudi.com
 ```
 
 ---
@@ -478,7 +474,7 @@ Mount(
 - `airflow-webserver` - Interface web (port 8080)
 - `airflow-scheduler` - Planificateur tâches
 
-**Accès:** [airflow.haroun-joudi.com](http://airflow.haroun-joudi.com)  
+**Accès:** [airflow.haroun-joudi.com](https://airflow.haroun-joudi.com)  
 **Login:** airflow / airflow
 
 **Exécution Manuelle:**
@@ -499,7 +495,7 @@ Mount(
 | Validation Spark | ~60 min | Broadcast joins |
 | Ingestion PostgreSQL | ~60 min | Batch insert 10k/txn |
 | Requêtes Dashboard | <1 sec | Cache permanent |
-| Entraînement ML | ~10 min | Échantillon 200k |
+| Entraînement ML | ~30 min | Échantillon 200k |
 | Pipeline Airflow complet | ~45 min | Orchestration optimisée |
 
 ### Ressources Système
@@ -569,8 +565,7 @@ Mount(
 ### Rapports Livrables
 
 - ✅ **Exercise 4 Report (FR)** - 15 pages - `ex04_dashboard/Exercise_4_Dashboard_Report_FR.md`
-- ✅ **Exercise 4 Report (EN)** - 15 pages - `ex04_dashboard/Exercise_4_Dashboard_Report.md`
-- ✅ **Project Log** - Timeline complète - `PROJECT_LOG.md`
+
 - ✅ **Implementation Plans** - Ex01-Ex06 - `brain/artifacts/`
 
 ### Guides Techniques
@@ -623,18 +618,18 @@ docker compose up -d
 docker compose ps
 
 # 4. Accéder aux interfaces
-# Spark:    http://spark.haroun-joudi.com
-# MinIO:    http://minio.haroun-joudi.com
+# Spark:    http://spark-web-ui.haroun-joudi.com
+# MinIO:    http://minio-console.haroun-joudi.com
 # Metabase: http://metabase.haroun-joudi.com
-# ML:       http://ml.haroun-joudi.com
-# Airflow:  http://airflow.haroun-joudi.com
+# ML:       https://ml-service.haroun-joudi.com
+# Airflow:  https://airflow.haroun-joudi.com
 ```
 
 ### Exécution Pipeline Complet
 
 **Option A: Airflow (Recommandé)**
 ```bash
-# Accéder à http://airflow.haroun-joudi.com
+# Accéder à https://airflow.haroun-joudi.com
 # Login: airflow / airflow
 # Activer DAG: nyc_taxi_pipeline
 # Trigger manuellement
@@ -730,6 +725,6 @@ Ce projet est réalisé dans un cadre académique pour CY Tech.
 
 ---
 
-**🎉 PROJET COMPLET - PRODUCTION READY**
+**Projet Big Data - CY Tech 2025**
 
 *Dernière mise à jour: 7 février 2026*

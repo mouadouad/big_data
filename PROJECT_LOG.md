@@ -1,10 +1,6 @@
 # Big Data Project - Execution Log
 
 **Project:** NYC Yellow Taxi Data Pipeline  
-**Server:** bigdata-1 (192.168.100.30)  
-**Team:** Haroun  
-**Start Date:** February 4, 2026  
-**Deadline:** February 7, 2026
 
 ---
 
@@ -29,7 +25,7 @@ This allows remote access to all Big Data services while maintaining security th
 
 ---
 
-## Phase 1: Project Analysis (Feb 4, 22:41 - 23:06)
+## Phase 1: Project Analysis
 
 ### Initial Assessment
 - **Objective:** Compare friend's implementation with our project structure
@@ -54,7 +50,7 @@ This allows remote access to all Big Data services while maintaining security th
 
 ---
 
-## Phase 2: Implementation (Feb 4, 23:06 - 23:50)
+## Phase 2: Implementation
 
 ### Docker Infrastructure Updates
 **File Modified:** `docker-compose.yml`
@@ -759,12 +755,12 @@ spark_data_ingestion → load_data_warehouse → ml_preprocessing → ml_trainin
 ### Service Access URLs:
 
 **Production Services:**
-- Spark Master UI: http://192.168.100.30:8081
-- MinIO Console: http://192.168.100.30:9001 (minio/minio123)
-- PostgreSQL: 192.168.100.30:5432 (postgres/postgres)
-- Metabase: http://192.168.100.30:3000
-- ML Service: http://192.168.100.30:8501
-- Airflow: http://192.168.100.30:8080 (airflow/airflow)
+- Spark Master UI: http://spark-web-ui.haroun-joudi.com
+- MinIO Console: http://minio-console.haroun-joudi.com (minio/minio123)
+- PostgreSQL: bigdata-1:5432 (postgres/postgres)
+- Metabase: http://metabase.haroun-joudi.com (harounjoudi.dev@gmail.com/metabase123)
+- ML Service: https://ml-service.haroun-joudi.com/
+- Airflow: https://airflow.haroun-joudi.com (airflow/airflow)
 
 ### Technical Achievements:
 
@@ -830,40 +826,3 @@ spark_data_ingestion → load_data_warehouse → ml_preprocessing → ml_trainin
 - Peak RAM: 14GB (Spark ingestion)
 - Steady RAM: 8GB (all services)
 - CPU: 2-4 cores during processing
-
----
-
-## Project Completion Summary
-
-### Timeline:
-- **Start:** February 4, 2026 21:37
-- **Ex01-02 Complete:** February 5, 2026 03:00
-- **Ex03 Complete:** February 5, 2026 10:00
-- **Ex04 Complete:** February 5, 2026 23:37
-- **Ex05 Integrated:** February 6, 2026 00:30
-- **Ex06 Deployed:** February 7, 2026 01:00
-- **Total Duration:** ~27 hours (development + deployment)
-
-### Deliverables:
-- ✅ Complete data pipeline (Ex01-03)
-- ✅ Professional BI dashboard (Ex04)
-- ✅ ML prediction service (Ex05)
-- ✅ Automated orchestration (Ex06)
-- ✅ Comprehensive documentation
-- ✅ Production-ready deployment
-
-### Documentation Created:
-- Implementation plans (Ex01-06)
-- Professional reports (Ex04 FR + EN)
-- Testing guides
-- Deployment instructions
-- Troubleshooting documentation
-- Project timeline log
-
----
-
-**PROJECT STATUS: PRODUCTION READY ✅**
-
-*This log documents the complete implementation of a production-grade Big Data pipeline for NYC Taxi trip analysis, demonstrating end-to-end data engineering, analytics, machine learning, and workflow orchestration capabilities.*
-
-*All timestamps in CET (UTC+1).*

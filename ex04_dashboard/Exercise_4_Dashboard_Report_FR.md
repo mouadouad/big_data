@@ -8,15 +8,14 @@
 **Jeu de Données :** NYC TLC Yellow Taxi Trip Records (2023)  
 **Volume de Données :** 36 623 337 trajets  
 **Outil de Tableau de Bord :** Metabase v0.50  
-**Date :** 5 février 2026
 
 ---
 
 ## Résumé Exécutif
 
-Ce rapport présente un tableau de bord analytique complet construit sur un jeu de données de **36,6 millions d'enregistrements** de trajets de taxis NYC couvrant l'année complète 2023. Le tableau de bord fournit des informations commerciales critiques à travers quatre visualisations soigneusement conçues qui analysent les tendances temporelles, la distribution géographique, les comportements de paiement et la dynamique des tarifs.
+Ce rapport présente un tableau de bord analytique pour **36,6 millions de trajets** de taxis NYC (2023). Le dashboard propose 4 visualisations analysant les tendances temporelles, la distribution géographique, les types de paiement et les tarifs horaires.
 
-L'implémentation s'appuie sur un **schéma en étoile de niveau production** hébergé sur PostgreSQL, avec des performances de requête optimisées grâce à une mise en cache intelligente et des jointures broadcast.
+L'architecture utilise un **schéma en étoile** sur PostgreSQL avec cache pour des requêtes rapides.
 
 ---
 
@@ -361,14 +360,11 @@ Tableau de Bord Analytique
 
 ## 9. Conclusion
 
-Ce tableau de bord transforme avec succès **36,6 millions d'enregistrements de trajets bruts** en **intelligence commerciale actionnable**. L'implémentation démontre :
+Ce tableau de bord analyse **36,6 millions de trajets** à travers 4 visualisations :
 
-✅ **Scalabilité** - Gère millions d'enregistrements avec requêtes sub-seconde  
-✅ **Fiabilité** - 100% d'intégrité données avec conception schéma étoile  
-✅ **Performance** - Mise en cache optimisée délivre expérience utilisateur instantanée  
-✅ **Insight** - Visualisation claire de schémas temporels, géographiques et comportementaux
-
-Le tableau de bord est **prêt pour production** et fournit la fondation analytique pour la prise de décision basée sur les données dans les opérations de taxis NYC.
+- Requêtes en moins d'1 seconde grâce au cache
+- 100% d'intégrité des données avec le schéma en étoile
+- Visualisation des tendances temporelles, géographiques et de paiement
 
 ---
 
@@ -376,8 +372,8 @@ Le tableau de bord est **prêt pour production** et fournit la fondation analyti
 
 **URL :** http://192.168.100.30:3000  
 **Base de Données :** PostgreSQL (taxi)  
-**Identifiants :** Accès admin standard  
-**Rafraîchissement :** Mis en cache (rechargement instantané)
+**Identifiants :** metabase / metabase123  
+**Rafraîchissement :** Mis en cache
 
 ## Annexe B : Dictionnaire de Données
 
@@ -399,11 +395,10 @@ Le tableau de bord est **prêt pour production** et fournit la fondation analyti
 
 ---
 
-**Rapport Préparé par :** Équipe Analytique Big Data  
+**Rapport Préparé par :** FILALI Amine / Haroun Joudi / Mouad Ouad  
 **Date :** 5 février 2026  
-**Version :** 1.0  
-**Statut :** ✅ Complet
+**Version :** 1.0
 
 ---
 
-*Ce tableau de bord a été construit dans le cadre du cours Big Data de CY Tech, démontrant les capacités d'ingénierie et d'analytique de données de bout en bout sur un jeu de données réel de 36+ millions d'enregistrements.*
+*Projet Big Data - CY Tech 2025*

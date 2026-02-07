@@ -5,7 +5,7 @@ Créer un modèle de Machine Learning pour prédire le prix total (`total_amount
 
 ## ✅ Résultats Obtenus
 - **RMSE Test:** 6.56 (**✅ < 10**)
-- **R²:** 0.91 (excellent)
+- **R²:** 0.91
 - **MAE:** 3.50
 - **Algorithme:** Random Forest Regressor
 
@@ -53,7 +53,7 @@ docker-compose up -d
 docker-compose logs -f ml-service
 ```
 
-**Interface disponible:** http://192.168.100.30:8501
+**Interface disponible:** https://ml-service.haroun-joudi.com/
 
 ### Arrêter le service:
 ```bash
@@ -105,7 +105,6 @@ python preprocessing.py
 python train.py
 ```
 
-**Durée:** ~10 minutes  
 **Sortie:** `../models/taxi_fare_model.joblib`
 
 **Ce que ça fait:**
@@ -126,7 +125,7 @@ R²: 0.91
 streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
-**Accès:** http://192.168.100.30:8501
+**Accès:** https://ml-service.haroun-joudi.com/
 
 **Fonctionnalités:**
 - Formulaire interactif pour saisir détails du trajet
@@ -279,8 +278,3 @@ python train.py          # Ensuite
 - [ ] A/B testing de différents modèles
 
 ---
-
-**Auteur:** Big Data Project - CY Tech  
-**Date:** Février 2026  
-**Version:** 1.0  
-**Statut:** ✅ Complet et fonctionnel

@@ -20,7 +20,7 @@ ex06_airflow/
 ```
 
 ## Accès
-- **URL**: http://51.83.22.57:8080
+- **URL**: https://airflow.haroun-joudi.com
 - **Login**: airflow
 - **Password**: airflow
 
