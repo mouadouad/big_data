@@ -16,6 +16,11 @@ object Main extends App{
     .getOrCreate()
   spark.sparkContext.setLogLevel("WARN")
 
+  println("=" * 60)
+  println("NYC Taxi Data Ingestion - Exercise 2")
+  println("=" * 60)
+
+  println("\n[1/3] Validating data and writing to validated bucket...")
   Validator.validate(spark)
 
   val jdbcUrl = "jdbc:postgresql://localhost:5432/taxi"
@@ -24,9 +29,16 @@ object Main extends App{
   jdbcProps.setProperty("password", "postgres")
   jdbcProps.setProperty("driver", "org.postgresql.Driver")
 
+  // Skipping zone lookup copy - already populated in database (265 rows)
+  // println("\n[2/3] Copying taxi zone lookup to PostgreSQL...")
+  // Ingestor.copyLookUp(spark, jdbcUrl, jdbcProps)
 
-  Ingestor.copyLookUp(spark, jdbcUrl, jdbcProps)
+  println("\n[2/2] Ingesting validated data to PostgreSQL...")
   Ingestor.ingestData(spark, jdbcUrl, jdbcProps)
 
+  println("\n" + "=" * 60)
+  println("✓ Data ingestion complete!")
+  println("=" * 60)
+
   spark.stop()
-  }
+}

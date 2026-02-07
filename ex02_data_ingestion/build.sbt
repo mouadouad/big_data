@@ -4,7 +4,27 @@ ThisBuild / scalaVersion := "2.13.17"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "ex02_data_ingestion"
+    name := "ex02_data_ingestion",
+    fork := true,
+    javaOptions ++= Seq(
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
+      "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-opens=java.base/java.net=ALL-UNNAMED",
+      "--add-opens=java.base/java.nio=ALL-UNNAMED",
+      "--add-opens=java.base/java.util=ALL-UNNAMED",
+      "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+      "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
+      "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+      "--add-opens=java.base/sun.nio.cs=ALL-UNNAMED",
+      "--add-opens=java.base/sun.security.action=ALL-UNNAMED",
+      "--add-opens=java.base/sun.util.calendar=ALL-UNNAMED",
+      "-Xmx16g",  // Increased from 4g to 16g (24GB available RAM)
+      "-Xms8g",   // Start with 8GB to reduce GC overhead
+      "-XX:+UseG1GC",  // Use G1 garbage collector (better for large heaps)
+      "-XX:MaxGCPauseMillis=200"  // Target 200ms GC pauses
+    )
   )
 
 // https://mvnrepository.com/artifact/org.apache.spark/spark-core

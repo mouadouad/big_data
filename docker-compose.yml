@@ -62,13 +62,14 @@ services:
     networks:
       - spark-network
 
+  # MinIO (S3-compatible storage)
   minio:
     hostname: minio
     container_name: minio
     image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     ports:
-      - '9000:9000'  # Changed from 9000 to avoid HDFS conflict
-      - '9001:9001'
+      - '9000:9000'  # API port
+      - '9001:9001'  # Web console port
     volumes:
       - ./minio-data:/data
     environment:
@@ -77,21 +78,25 @@ services:
     command: server /data --console-address ":9001"
     networks:
       - spark-network
+
+  # PostgreSQL Database for Data Warehouse
   postgres:
-          image: postgres:16
-          container_name: postgres
-          restart: always
-          environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: taxi
-          ports:
-            - "5432:5432"
-          volumes:
-            - ./postgres-data:/var/lib/postgresql/data
-            - ./ex03_sql_table_creation:/docker-entrypoint-initdb.d
-          networks:
-            - spark-network
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: taxi
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./ex03_sql_table_creation:/docker-entrypoint-initdb.d
+    networks:
+      - spark-network
+
+  # Metabase for Data Visualization
   metabase:
     image: metabase/metabase:latest
     container_name: metabase
@@ -101,13 +106,127 @@ services:
     depends_on:
       - postgres
     volumes:
-       - ./metabase-data:/metabase-data
+      - ./metabase-data:/metabase-data
     networks:
       - spark-network
 
-        
+  # ML Prediction Service (Exercise 5) - Streamlit Interface
+  ml-service:
+    image: python:3.11-slim
+    container_name: ml-service
+    working_dir: /app
+    volumes:
+      - ./ex05_ml_prediction_service:/app
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      bash -c "
+      if [ ! -f models/taxi_fare_model.joblib ]; then
+        echo '⚠️  Model not found! Please run training first:';
+        echo '   cd ex05_ml_prediction_service';
+        echo '   source .venv/bin/activate';
+        echo '   cd src && python preprocessing.py && python train.py';
+        sleep infinity;
+      else
+        pip install -q uv &&
+        uv pip install --system pandas scikit-learn pyarrow s3fs joblib streamlit &&
+        cd src &&
+        streamlit run app.py --server.port 8501 --server.address 0.0.0.0;
+      fi
+      "
+    networks:
+      - spark-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+    restart: unless-stopped
+    depends_on:
+      - minio
+      - postgres
+
+  # ================================================================
+  # EXERCISE 6: Airflow Orchestration
+  # ================================================================
+  
+  # Airflow Metadata Database
+  airflow-postgres:
+    image: postgres:13
+    container_name: airflow-postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - airflow-postgres-data:/var/lib/postgresql/data
+    networks:
+      - spark-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 5s
+      retries: 5
+
+  # Airflow Web Interface
+  airflow-webserver:
+    build: ./ex06_airflow
+    image: custom-airflow:2.8.1
+    container_name: airflow-webserver
+    user: root
+    depends_on:
+      - airflow-postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+      _AIRFLOW_DB_MIGRATE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: airflow
+      _AIRFLOW_WWW_USER_PASSWORD: airflow
+    volumes:
+      - ./ex06_airflow/dags:/opt/airflow/dags
+      - ./ex06_airflow/logs:/opt/airflow/logs
+      - ./ex06_airflow/plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/haroun/Projects/projet_big_data_cytech_25:/app
+    ports:
+      - "8080:8080"
+    command: webserver
+    networks:
+      - spark-network
+
+  # Airflow Task Scheduler
+  airflow-scheduler:
+    build: ./ex06_airflow
+    image: custom-airflow:2.8.1
+    container_name: airflow-scheduler
+    user: root
+    depends_on:
+      - airflow-webserver
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./ex06_airflow/dags:/opt/airflow/dags
+      - ./ex06_airflow/logs:/opt/airflow/logs
+      - ./ex06_airflow/plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/haroun/Projects/projet_big_data_cytech_25:/app
+    command: scheduler
+    networks:
+      - spark-network
+
 networks:
   spark-network:
     driver: bridge
-    
 
+volumes:
+  airflow-postgres-data:

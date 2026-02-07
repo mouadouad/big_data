@@ -22,6 +22,9 @@ object UploadNYCTaxi extends App {
       val parquetUrl =
         s"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_$year-$monthStr.parquet"
 
+      println(s"Downloading: $parquetUrl")
+      println(s"Uploading to: s3a://$bucket/$objectName")
+
       val inputStream = new URL(parquetUrl).openStream()
 
       minioClient.putObject(
@@ -34,10 +37,23 @@ object UploadNYCTaxi extends App {
       )
 
       inputStream.close()
+      println(s"✓ Successfully uploaded $objectName")
     }
   }
 
+  println("=" * 60)
+  println("NYC Yellow Taxi Data Retrieval - Exercise 1")
+  println("=" * 60)
+  
+  // Download 2023 data
+  println("\n[1/2] Downloading 2023 data (12 months)...")
   uploadYearToMinio(2023, bucket, minioClient)
+  
+  // Download 2024 data
+  println("\n[2/2] Downloading 2024 data (12 months)...")
+  uploadYearToMinio(2024, bucket, minioClient)
+
+  println("\n" + "=" * 60)
+  println("✓ Data retrieval complete!")
+  println("=" * 60)
 }
-
-

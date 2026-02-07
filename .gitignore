@@ -48,8 +48,6 @@ build/
 
 ### Minio ###
 minio-data
-postgres-data
-metabase-data
 
 ### Hadoop ###
 hadoop

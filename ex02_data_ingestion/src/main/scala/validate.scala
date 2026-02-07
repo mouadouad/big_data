@@ -93,7 +93,7 @@ object Validator {
         .mode("append")
         .parquet(outputPath)
 
-      println(s"Validated Parquet written to $outputPath")
+      println(s"✓ Validated Parquet written to $outputPath")
 
     }
 

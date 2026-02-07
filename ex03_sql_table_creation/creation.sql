@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS fact_trips CASCADE;
+DROP TABLE IF EXISTS fact_trip CASCADE;
 DROP TABLE IF EXISTS dim_datetime CASCADE;
 DROP TABLE IF EXISTS dim_vendor CASCADE;
 DROP TABLE IF EXISTS dim_zone CASCADE;
-DROP TABLE IF EXISTS dim_rate_code CASCADE;
+DROP TABLE IF EXISTS dim_ratecode CASCADE;
 DROP TABLE IF EXISTS dim_payment_type CASCADE;
 
 
@@ -67,7 +67,6 @@ CREATE TABLE fact_trip (
     improvement_surcharge DOUBLE PRECISION,
     congestion_surcharge DOUBLE PRECISION,
     airport_fee DOUBLE PRECISION,
-    cbd_congestion_fee DOUBLE PRECISION,
     total_amount DOUBLE PRECISION,
 
     CONSTRAINT fk_pickup_time FOREIGN KEY (pickup_datetime_id) REFERENCES dim_datetime(datetime_id),
